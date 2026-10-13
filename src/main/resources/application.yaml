@@ -1,0 +1,39 @@
+server:
+  port: 8081
+
+app:
+  # Embeddings use a separate Ollama instance (local), see config/OllamaEmbeddingConfig
+  ollama:
+    embedding:
+      base-url: ${OLLAMA_EMBEDDING_BASE_URL:http://localhost:11434}
+  rag:
+    force-rebuild: false
+    top-k: 4
+    similarity-threshold: 0.0
+    chunk:
+      size: 100
+      min-chunk-size: 200
+      min-chunk-to-embed: 50
+      max-num-chunks: 8192
+      keep-separator: true
+
+spring:
+  application:
+    name: demo
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://100.102.35.2:11434}
+      init:
+        pull-model-strategy: never
+      chat:
+        options:
+          model: ${OLLAMA_MODEL:qwen3:8b}
+      embedding:
+        options:
+          model: ${OLLAMA_EMBEDDING_MODEL:nomic-embed-text}
+
+logging:
+  level:
+    root: info
+    com.genai.first.demo: info
+    org.springframework.ai: info

@@ -16,10 +16,30 @@ app:
       min-chunk-to-embed: 50
       max-num-chunks: 8192
       keep-separator: true
+    pdf:
+      mode: page # or paragraph
+      path: file:./src/main/resources/rag/qa-over-internal-docs/*.pdf
+      pages-per-document: 1
+      left-alignment: true
+      number-of-top-text-lines-to-delete: 0
+      number-of-bottom-text-lines-to-delete: 0
+  pgvector:
+    table-name-for-chat-memory: vector_store
+    table-name-for-rag: rag_vector_store
+    initialize-schema: true
+    index-type: HNSW
+    distance-type: COSINE_DISTANCE
+    dimensions: 1024 # bge-m3
+    max-document-batch-size: 10000
 
 spring:
   application:
     name: demo
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: 1q2w3e
+    driver-class-name: org.postgresql.Driver
   ai:
     ollama:
       base-url: ${OLLAMA_BASE_URL:http://100.102.35.2:11434}
@@ -27,7 +47,7 @@ spring:
         pull-model-strategy: never
       chat:
         options:
-          model: ${OLLAMA_MODEL:qwen3.8:27b}
+          model: ${OLLAMA_MODEL:qwen3:8b}
       embedding:
         options:
           model: ${OLLAMA_EMBEDDING_MODEL:bge-m3}

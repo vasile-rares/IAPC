@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/books"
+method: POST
+order: 7000

@@ -2,10 +2,10 @@ server:
   port: 8081
 
 app:
-  # Embeddings use a separate Ollama instance (local), see config/OllamaEmbeddingConfig
+  # Embeddings use their own Ollama base-url (same remote PC as chat), see config/OllamaEmbeddingConfig
   ollama:
     embedding:
-      base-url: ${OLLAMA_EMBEDDING_BASE_URL:http://localhost:11434}
+      base-url: ${OLLAMA_EMBEDDING_BASE_URL:http://100.102.35.2:11434}
   rag:
     force-rebuild: false
     top-k: 4
@@ -27,10 +27,10 @@ spring:
         pull-model-strategy: never
       chat:
         options:
-          model: ${OLLAMA_MODEL:qwen3:8b}
+          model: ${OLLAMA_MODEL:qwen3.8:27b}
       embedding:
         options:
-          model: ${OLLAMA_EMBEDDING_MODEL:nomic-embed-text}
+          model: ${OLLAMA_EMBEDDING_MODEL:bge-m3}
 
 logging:
   level:

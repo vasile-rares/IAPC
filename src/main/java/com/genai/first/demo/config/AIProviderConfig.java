@@ -63,6 +63,18 @@ public class AIProviderConfig {
                 ).build();
     }
 
+    /**
+     * Advanced RAG client. The RetrievalAugmentationAdvisor is attached per request by
+     * InternalQAController (via AdvancedRagAdvisorFactory) so an optional metadata filter can be applied.
+     */
+    @Bean("ollamaAdvancedRAGChatClient")
+    ChatClient ollamaAdvancedRAGChatClient(OllamaChatModel ollamaChatModel,
+                                           SimpleLoggerAdvisor simpleLoggerAdvisor) {
+        return ChatClient.builder(ollamaChatModel)
+                .defaultAdvisors(simpleLoggerAdvisor)
+                .build();
+    }
+
     @Bean("chatMemoryVectorStore")
     VectorStore chatMemoryVectorStore(JdbcTemplate jdbcTemplate,
                                       PgVectorStoreConfigData pgVectorStoreConfigData,
